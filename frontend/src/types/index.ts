@@ -15,6 +15,7 @@ export interface Indicator {
 export interface TimeSeriesPoint {
   date: string;
   value: number;
+  [key: string]: unknown;
 }
 
 export interface TimeSeriesResponse {
