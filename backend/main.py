@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from core.config import get_settings
 from core.logging_config import configure_logging, get_logger
+from database.init_db import init_db
 from routers.admin import router as admin_router
 from routers.health import router as health_router
 from routers.indicators import router as indicators_router
@@ -25,6 +26,13 @@ settings = get_settings()
 async def lifespan(app: FastAPI):
     """Startup and shutdown lifecycle."""
     log.info("Starting Uzbekistan Economic Monitor API...")
+
+    # Initialize database tables (safe to run multiple times)
+    try:
+        await init_db()
+        log.info("Database initialized.")
+    except Exception as exc:
+        log.error("Database init failed: %s", exc)
 
     # Run initial data fetch (non-blocking — errors are logged not raised)
     try:

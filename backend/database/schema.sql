@@ -2,14 +2,10 @@
 -- Uzbekistan Economic Indicators - PostgreSQL Schema
 -- ============================================================
 
--- Drop tables if they exist (for clean re-runs)
-DROP TABLE IF EXISTS indicator_values CASCADE;
-DROP TABLE IF EXISTS indicators CASCADE;
-
 -- ============================================================
 -- indicators table
 -- ============================================================
-CREATE TABLE indicators (
+CREATE TABLE IF NOT EXISTS indicators (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(100) NOT NULL UNIQUE,
     display_name VARCHAR(200) NOT NULL,
@@ -24,7 +20,7 @@ CREATE TABLE indicators (
 -- ============================================================
 -- indicator_values table
 -- ============================================================
-CREATE TABLE indicator_values (
+CREATE TABLE IF NOT EXISTS indicator_values (
     id           BIGSERIAL PRIMARY KEY,
     indicator_id INTEGER      NOT NULL REFERENCES indicators(id) ON DELETE CASCADE,
     value        NUMERIC(20, 6) NOT NULL,
@@ -55,7 +51,8 @@ INSERT INTO indicators (name, display_name, category, unit, source, description)
     ('cny_uzs',             'CNY / UZS Exchange Rate',      'currency', 'UZS',      'CBU (cbu.uz)',         'Official Chinese Yuan to Uzbekistani Som exchange rate'),
     ('exports_usd',         'Total Exports (USD)',           'trade',    'USD',      'Stat.uz / World Bank', 'Total monthly exports value in USD'),
     ('imports_usd',         'Total Imports (USD)',           'trade',    'USD',      'Stat.uz / World Bank', 'Total monthly imports value in USD'),
-    ('trade_balance',       'Trade Balance (USD)',           'trade',    'USD',      'Derived',              'Exports minus Imports in USD');
+    ('trade_balance',       'Trade Balance (USD)',           'trade',    'USD',      'Derived',              'Exports minus Imports in USD')
+ON CONFLICT (name) DO NOTHING;
 
 -- ============================================================
 -- Trigger: auto-update updated_at on indicators
