@@ -1,0 +1,48 @@
+# ── Python ──────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Environment / Secrets ───────────────────────────────────
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ── Database ─────────────────────────────────────────────────
+*.sqlite3
+*.db
+postgres-data/
+
+# ── Node / Frontend ──────────────────────────────────────────
+node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# ── Logs ────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── OS ──────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ─────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Docker ──────────────────────────────────────────────────
+docker-data/
